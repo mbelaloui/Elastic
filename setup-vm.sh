@@ -32,5 +32,5 @@ sudo mv -f ${JDK_TEMP_FILE} ${JDK_DIR}/${JDK_FILE}
 echo "PATH=${JAVA_PATH}:$PATH
 export PATH" >> ~/.bashrc
 . ~/.bashrc
-
+echo "set-Up the Node done."
 #################################################################

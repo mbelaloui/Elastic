@@ -1,8 +1,7 @@
 #!/bin/bash
 
-package_name=elastic-7.1.1.tar.gz
-TMP=/tmp
 ELK_REPO='/etc/apt/sources.list.d/elastic-7.x.list'
+NAME=logstash
 
 #update package and dependencies
 (sudo apt update -y && sudo apt -y upgrade && sudo apt purge) > /dev/null
@@ -25,14 +24,19 @@ else
 fi
 
 #install elastic package
-(sudo apt update -y && sudo apt -y install elasticsearch) 
-sudo systemctl enable elasticsearch
+(sudo apt update -y && sudo apt -y install ${NAME})
+
+
+
+#save the return value of the install cmd and look if its successful
+
+sudo systemctl enable ${NAME}
 
 #if we run the elasticsearch in dev mode in local that will work fine with out any config just start the service
 #if we run the elasticsearch in prod or in a Vm with bridged network mode [to make the node richable frome the externes machines] we have to do some more configuration in the /etc/elasticsearch/elasticsearch.yml see the ReadMe for more details 
 # to start the elasticsearch <systemctl restart elasticsearch>
 
 
-sudo systemctl restart elasticsearch
+sudo systemctl restart ${NAME}
 
-echo "Elasticsearch successfully installed and enabled"
+echo "${NAME} successfully installed and enabled"

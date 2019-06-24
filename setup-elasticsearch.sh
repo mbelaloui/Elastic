@@ -1,17 +1,17 @@
 #!/bin/bash
 
-package_name=elastic-7.1.1.tar.gz
-TMP=/tmp
 ELK_REPO='/etc/apt/sources.list.d/elastic-7.x.list'
+NAME=elasticsearch
 
 #update package and dependencies
-(sudo apt update -y && sudo apt -y upgrade && sudo apt purge) > /dev/null
+#ckage and dependencies
+(sudo apt-get update -y && sudo apt-get -y upgrade && sudo apt-get purge) > /dev/null
 
 #install the ELK public key
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 
 #install apt repository
-(sudo apt install -y apt-transport-https) > /dev/null
+(sudo apt-get install -y apt-transport-https) > /dev/null
 
 #add the elastic repository
 if [ ! -f $ELK_REPO ]; then
@@ -25,14 +25,15 @@ else
 fi
 
 #install elastic package
-(sudo apt update -y && sudo apt -y install elasticsearch) 
-sudo systemctl enable elasticsearch
+(sudo apt-get update -y && sudo apt-get -y install ${NAME}) 
+sudo systemctl enable ${NAME}
 
 #if we run the elasticsearch in dev mode in local that will work fine with out any config just start the service
 #if we run the elasticsearch in prod or in a Vm with bridged network mode [to make the node richable frome the externes machines] we have to do some more configuration in the /etc/elasticsearch/elasticsearch.yml see the ReadMe for more details 
 # to start the elasticsearch <systemctl restart elasticsearch>
+ip4=$(/sbin/ip -o -4 addr list enp0s3 | awk '{print $4}' | cut -d/ -f1)
+echo $ip4
+sudo systemctl restart ${NAME}
 
+echo "${NAME} successfully installed and enabled"
 
-sudo systemctl restart elasticsearch
-
-echo "Elasticsearch successfully installed and enabled"

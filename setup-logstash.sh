@@ -1,16 +1,16 @@
 #!/bin/bash
 
 ELK_REPO='/etc/apt/sources.list.d/elastic-7.x.list'
-NAME=logstash
+NAME=kibana
 
 #update package and dependencies
-(sudo apt update -y && sudo apt -y upgrade && sudo apt purge) > /dev/null
+(sudo apt-get update -y && sudo apt-get -y upgrade && sudo apt-get purge) > /dev/null
 
 #install the ELK public key
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 
 #install apt repository
-(sudo apt install -y apt-transport-https) > /dev/null
+(sudo apt-get install -y apt-transport-https) > /dev/null
 
 #add the elastic repository
 if [ ! -f $ELK_REPO ]; then
@@ -24,12 +24,7 @@ else
 fi
 
 #install elastic package
-(sudo apt update -y && sudo apt -y install ${NAME})
-
-
-
-#save the return value of the install cmd and look if its successful
-
+(sudo apt-get update -y && sudo apt-get -y install ${NAME}) 
 sudo systemctl enable ${NAME}
 
 #if we run the elasticsearch in dev mode in local that will work fine with out any config just start the service

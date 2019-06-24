@@ -1,5 +1,5 @@
 cluster.name: "my-application"
-node.name: "node-1"
+#node.name: hostname of the node is the default name
 path.data: /var/lib/elasticsearch
 path.logs: /var/log/elasticsearch
 network.host: _enp0s3_

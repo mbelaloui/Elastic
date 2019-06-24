@@ -31,9 +31,7 @@ sudo systemctl enable ${NAME}
 #if we run the elasticsearch in dev mode in local that will work fine with out any config just start the service
 #if we run the elasticsearch in prod or in a Vm with bridged network mode [to make the node richable frome the externes machines] we have to do some more configuration in the /etc/elasticsearch/elasticsearch.yml see the ReadMe for more details 
 # to start the elasticsearch <systemctl restart elasticsearch>
-ip4=$(/sbin/ip -o -4 addr list enp0s3 | awk '{print $4}' | cut -d/ -f1)
-echo $ip4
+cp elastic_conf.yml /etc/elasticsearch/elasticsearch.yml
+
 sudo systemctl restart ${NAME}
-
-echo "${NAME} successfully installed and enabled"
-
+echo "${NAME} successfully installed and enabled please change the node and the cluster name in /etc/elasticsearch/elasticsearch.yml"

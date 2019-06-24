@@ -8,8 +8,8 @@ JDK_DIR="/usr/java"
 JAVA_PATH=${JDK_DIR}/${JDK_FILE}"/bin"
 
 #################################################################
-(sudo apt update && sudo apt upgrade && sudo apt purge) > /dev/null
-(sudo apt install -y sudo openssh-server git) > /dev/null
+(sudo apt-get update && sudo apt-get upgrade && sudo apt-get purge) > /dev/null
+(sudo apt-get install -y sudo openssh-server git) > /dev/null
 
 #################################################################
 if [ ! -f ${JDK_TEMP_FILE} ]; then

@@ -34,4 +34,4 @@ sudo systemctl enable ${NAME}
 sudo cp elastic_conf.yml /etc/elasticsearch/elasticsearch.yml
 
 sudo systemctl restart ${NAME}
-echo "${NAME} successfully installed and enabled please change the node name and the cluster name in /etc/elasticsearch/elasticsearch.yml"
+echo "${NAME} successfully installed and enabled please change the node name and the cluster name, the seed and the master in /etc/elasticsearch/elasticsearch.yml"

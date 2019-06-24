@@ -1,0 +1,2 @@
+server.host: _enp0s3_
+#elasticsearch.hosts: ["http://10.2.1.156:9200"]

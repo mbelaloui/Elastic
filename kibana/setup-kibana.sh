@@ -31,6 +31,7 @@ sudo systemctl enable ${NAME}
 #if we run the elasticsearch in prod or in a Vm with bridged network mode [to make the node richable frome the externes machines] we have to do some more configuration in the /etc/elasticsearch/elasticsearch.yml see the ReadMe for more details 
 # to start the elasticsearch <systemctl restart elasticsearch>
 
+sudo cp kibana_conf.yml /etc/kibana/kibana.yml
 
 sudo systemctl restart ${NAME}
 

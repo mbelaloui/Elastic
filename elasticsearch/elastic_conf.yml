@@ -1,20 +1,25 @@
-cluster.name: "my-application"
-
-
+# ---------------------------------- Cluster -----------------------------------
+cluster.name: my-application
+# ------------------------------------ Node ------------------------------------
 #node.name: hostname of the node is the default name
 #node.name: if we prefert to set this value in start of the instance 
 # ./elasticsearch -E node.name=node_name_exemple
+
+node.master: false
+node.data: true
+# ----------------------------------- Paths ------------------------------------
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+# ----------------------------------- Memory -----------------------------------
+#bootstrap.memory_lock: true
+# ---------------------------------- Network -----------------------------------
+network.host: _site_
+#http.port: 9200
+# --------------------------------- Discovery ----------------------------------
+cluster.initial_master_nodes: ["elastic-node-1", "elastic-node-2", "elastic-node-3"]
+discovery.seed_hosts: ["elastic-node-1", "elastic-node-2", "elastic-node-3"]
 
 path.data: /var/lib/elasticsearch
 path.logs: /var/log/elasticsearch
 network.host: _enp0s3_
 http.port: 9200
-
-#discovery.seed_hosts: ["127.0.0.1"]
-#discovery.seed_hosts: ["node.name_ of all the nide in the cluster"]
-#it's more relevant to configue the seed hosts thans master node 
-
-#cluster.initial_master_nodes: ["127.0.0.1"]
-
-#       -if we run multiple node in the same machine-
-#node.max_local_storage_nodes: 3

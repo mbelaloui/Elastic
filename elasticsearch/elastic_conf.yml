@@ -1,3 +1,8 @@
+## this is a simple example of a cluster named  <my-application> withe 3 node
+# elasticsearch-node-1 as master-node and data-node
+# elasticsearch-node-2 and elasticsearch-node-3 as data-node
+
+
 # ---------------------------------- Cluster -----------------------------------
 cluster.name: my-application
 # ------------------------------------ Node ------------------------------------
@@ -5,21 +10,23 @@ cluster.name: my-application
 #node.name: if we prefert to set this value in start of the instance 
 # ./elasticsearch -E node.name=node_name_exemple
 
-node.master: false
+
+# we have to set this configuration the first time a cluster is started
+node.master: true
+#node.master: false
 node.data: true
 # ----------------------------------- Paths ------------------------------------
 path.data: /var/lib/elasticsearch
+#path.data:  /var/elasticsearch
 path.logs: /var/log/elasticsearch
 # ----------------------------------- Memory -----------------------------------
 #bootstrap.memory_lock: true
 # ---------------------------------- Network -----------------------------------
-network.host: _site_
+network.host: _site_ #other possible values [ "the net_interface > _enp0s3_ < / > _local_ < ", "ip address >X.X.X.X< ipv4 or ipv6"]
 #http.port: 9200
 # --------------------------------- Discovery ----------------------------------
-cluster.initial_master_nodes: ["elastic-node-1", "elastic-node-2", "elastic-node-3"]
-discovery.seed_hosts: ["elastic-node-1", "elastic-node-2", "elastic-node-3"]
+### we have to put same name_node as in the /etc/hosts  or the ip address 
+cluster.initial_master_nodes: ["elasticsearch-node-1"]
+discovery.seed_hosts: ["elasticsearch-node-1", "elasticsearch-node-2", "elasticsearch-node-3"]
 
-path.data: /var/lib/elasticsearch
-path.logs: /var/log/elasticsearch
-network.host: _enp0s3_
-http.port: 9200
+

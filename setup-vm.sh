@@ -34,3 +34,23 @@ export PATH" >> ~/.bashrc
 . ~/.bashrc
 echo "set-Up the Node done."
 #################################################################
+
+
+#################################################################
+#  to add							#
+# creat a file to store the ssl/tsl certificates 		#
+# mkdir /usr/shar/cert/ .... is this a goos file to store certs #
+#								#
+# run the script that generat the certs automaticly 		#
+# giving to it a pass that secure:				#
+#	the CA							#
+#    and							#
+#	the nodes						#
+# we can call the main_ssl_gen.sh from here by 			#
+
+echo "generating the ssl/tls certificat Authority and certificat node"
+echo "please change the default password..."
+
+sh cert/main_ssl_gen.sh 					
+#################################################################
+

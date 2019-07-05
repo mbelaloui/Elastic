@@ -30,3 +30,27 @@ cluster.initial_master_nodes: ["elasticsearch-node-1"]
 discovery.seed_hosts: ["elasticsearch-node-1", "elasticsearch-node-2", "elasticsearch-node-3"]
 
 
+#### in process ####
+# -------------------------------- Monitoring ----------------------------------
+# xpack.monitoring.collection.enabled: true
+# #xpack.monitoring.enabled: true
+# #xpack.monitoring.collection.indices: *
+# #
+#
+# # --------------------------------- Security -----------------------------------
+# xpack.security.enabled: true
+# #xpack.security.transport.ssl.enabled: true
+#
+# # in /usr/shar/elasticsearch/bin/
+# # elasticsearch-certutil ca --pass test -v --out elastic-stack-ca.p12
+# #
+# #elasticsearch-certutil ca    /// pwd : cluster the default input is in "/usr/shar/elasticsearch/" dir 
+# #pwd for cert_node : node
+# #/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.keystore.secure_password
+# #/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.truststore.secure_password
+#
+#
+# xpack.security.transport.ssl.enabled: true
+# xpack.security.transport.ssl.verification_mode: certificate 
+# xpack.security.transport.ssl.keystore.path: /home/elastic-user/cert
+# xpack.security.transport.ssl.truststore.path: /home/elastic-user/cert 

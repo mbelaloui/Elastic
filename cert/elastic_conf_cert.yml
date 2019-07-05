@@ -1,0 +1,9 @@
+instances:
+        - name: 'elasticsearch-node-1'
+          dns: 'elasticsearch-node-1'
+        
+        - name: 'elasticsearch-node-2'
+          dns: 'elasticsearch-node-2'
+        
+        - name: 'elasticsearch-node-3'
+          dns: 'elasticsearch-node-3'

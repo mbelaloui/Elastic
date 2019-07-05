@@ -9,7 +9,7 @@ JAVA_PATH=${JDK_DIR}/${JDK_FILE}"/bin"
 
 #################################################################
 (sudo apt-get update && sudo apt-get upgrade && sudo apt-get purge) > /dev/null
-(sudo apt-get install -y sudo openssh-server git curl) > /dev/null
+(sudo apt-get install -y sudo openssh-server git curl unzip) > /dev/null
 
 #################################################################
 if [ ! -f ${JDK_TEMP_FILE} ]; then

@@ -51,6 +51,18 @@ echo "set-Up the Node done."
 echo "generating the ssl/tls certificat Authority and certificat node"
 echo "please change the default password..."
 
-sh cert/main_ssl_gen.sh 					
 #################################################################
+#this part is executer only in one of the master node.
+#it's should be different from conf to conf
+sh ../cert/main_ssl_gen.sh 					
+#################################################################
+#	aftere generating script 
+#	send the generated sert to the node
+#	try to get all the node withe there user-[ip, hostname] and scp the file to all of them 
+#	we should befor creat the directory to send in the sertificate in all the node
+#	user the 'elastic_conf_cert.yml' or a dirivent
+#  do this for all the node
+#	scp /etc/path_to_sert user@192.168.1.x:chemin/de/réception/
+#################################################################
+
 

@@ -30,7 +30,7 @@ sudo mv -f ${JDK_TEMP_FILE} ${JDK_DIR}/${JDK_FILE}
 #################################################################
 #		exporting java Path				#
 echo "PATH=${JAVA_PATH}:$PATH
-export PATH" >> ~/.bashrc
+export JAVA_HOME=${JAVA_PATH}" >> ~/.bashrc
 . ~/.bashrc
 echo "set-Up the Node done."
 #################################################################
@@ -48,13 +48,13 @@ echo "set-Up the Node done."
 #	the nodes						#
 # we can call the main_ssl_gen.sh from here by 			#
 
-echo "generating the ssl/tls certificat Authority and certificat node"
-echo "please change the default password..."
+#echo "generating the ssl/tls certificat Authority and certificat node"
+#echo "please change the default password..."
 
 #################################################################
 #this part is executer only in one of the master node.
 #it's should be different from conf to conf
-sh ../cert/main_ssl_gen.sh 					
+#sh ../cert/main_ssl_gen.sh 					
 #################################################################
 #	aftere generating script 
 #	send the generated sert to the node

@@ -65,4 +65,9 @@ echo "set-Up the Node done."
 #	scp /etc/path_to_sert user@192.168.1.x:chemin/de/réception/
 #################################################################
 
+echo "
+10.2.1.197	elasticsearch-node-1
+10.2.1.174	elasticsearch-node-2
+10.2.1.90	elasticsearch-node-3
+" >> /etc/hosts
 

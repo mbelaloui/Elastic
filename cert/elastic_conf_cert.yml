@@ -7,3 +7,7 @@ instances:
         
         - name: 'elasticsearch-node-3'
           dns: 'elasticsearch-node-3'
+
+        - name: 'kibana-node'
+          ip:
+                  "10.2.1.71"

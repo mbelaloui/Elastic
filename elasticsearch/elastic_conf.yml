@@ -1,56 +1,40 @@
 ## this is a simple example of a cluster named  <my-application> withe 3 node
-# elasticsearch-node-1 as master-node and data-node
-# elasticsearch-node-2 and elasticsearch-node-3 as data-node
+## elasticsearch-node-1 as master-node and data-node
+## elasticsearch-node-2 and elasticsearch-node-3 as data-node
+
 
 
 # ---------------------------------- Cluster -----------------------------------
 cluster.name: my-application
 # ------------------------------------ Node ------------------------------------
-#node.name: hostname of the node is the default name
-#node.name: if we prefert to set this value in start of the instance 
-# ./elasticsearch -E node.name=node_name_exemple
-
-
-# we have to set this configuration the first time a cluster is started
-node.master: true
-#node.master: false
+node.master: false
 node.data: true
 # ----------------------------------- Paths ------------------------------------
-path.data: /var/lib/elasticsearch
-#path.data:  /var/elasticsearch
+path.data:  /var/elasticsearch
 path.logs: /var/log/elasticsearch
 # ----------------------------------- Memory -----------------------------------
 #bootstrap.memory_lock: true
 # ---------------------------------- Network -----------------------------------
-network.host: _site_ #other possible values [ "the net_interface > _enp0s3_ < / > _local_ < ", "ip address >X.X.X.X< ipv4 or ipv6"]
+network.host: _site_
 #http.port: 9200
 # --------------------------------- Discovery ----------------------------------
-### we have to put same name_node as in the /etc/hosts  or the ip address 
 cluster.initial_master_nodes: ["elasticsearch-node-1"]
 discovery.seed_hosts: ["elasticsearch-node-1", "elasticsearch-node-2", "elasticsearch-node-3"]
 
-
-#### in process ####
 # -------------------------------- Monitoring ----------------------------------
-# xpack.monitoring.collection.enabled: true
-# #xpack.monitoring.enabled: true
-# #xpack.monitoring.collection.indices: *
-# #
+xpack.monitoring.collection.enabled: true
+xpack.monitoring.enabled: true
 #
-# # --------------------------------- Security -----------------------------------
+# --------------------------------- Security -----------------------------------
+
 # xpack.security.enabled: true
-# #xpack.security.transport.ssl.enabled: true
-#
-# # in /usr/shar/elasticsearch/bin/
-# # elasticsearch-certutil ca --pass test -v --out elastic-stack-ca.p12
-# #
-# #elasticsearch-certutil ca    /// pwd : cluster the default input is in "/usr/shar/elasticsearch/" dir 
-# #pwd for cert_node : node
-# #/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.keystore.secure_password
-# #/usr/share/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.truststore.secure_password
-#
-#
 # xpack.security.transport.ssl.enabled: true
 # xpack.security.transport.ssl.verification_mode: certificate 
-# xpack.security.transport.ssl.keystore.path: /home/elastic-user/cert
-# xpack.security.transport.ssl.truststore.path: /home/elastic-user/cert 
+# xpack.security.transport.ssl.keystore.path: /etc/elasticsearch/cert/elasticsearch-node-3.p12
+# xpack.security.transport.ssl.truststore.path: /etc/elasticsearch/cert/elasticsearch-node-3.p12
+#
+#
+# xpack.security.http.ssl.enabled: true
+# xpack.security.http.ssl.client_authentication: optional
+# xpack.security.http.ssl.keystore.path: /etc/elasticsearch/cert/elasticsearch-node-3.p12
+# xpack.security.http.ssl.truststore.path: /etc/elasticsearch/cert/elasticsearch-node-3.p12

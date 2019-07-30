@@ -67,10 +67,11 @@ CA_PART ()
 CERT_PART()
 {
 	echo "Nodes Certificats"
-	if [ "$1" -eq 3 ]
+	if [ "$1" -eq 4 ]
 	then
-		FILE_NODES_CONF=$(readlink -f $4)
-		CA_DEST=$(readlink -f $3)
+		FILE_NODES_CONF=$(readlink -f $5)
+		CA_KEY=$(readlink -f $3)
+		CA_CERT=$(readlink -f $4)
 #--------------------------------Name output------------------------------------------------------------------------------------------
 		echo -n "Please, enter the name of the out put Certificats zip file : [default: ${DEFAULT_CERT_NAME}]"
 		read OUTPUT_CERT
@@ -82,7 +83,7 @@ CERT_PART()
 		fi
 #--------------------------------Password Ca------------------------------------------------------------------------------------------
 		echo -n "Please enter the key of the Ca : "
-		read -s CA_KEY
+		read -s CA_PASS
 		echo ""
 #--------------------------------Password Nodes---------------------------------------------------------------------------------------
 		echo -n "Please enter the key of the Nodes : "
@@ -94,15 +95,17 @@ CERT_PART()
 		if [ -f "/usr/share/elasticsearch/bin/elasticsearch-certutil" ]; then
 			echo "Generating the Cluster node certificats."
 			sudo /usr/share/elasticsearch/bin/elasticsearch-certutil cert \
+				--ca-cert ${CA_CERT}\
+				--ca-key ${CA_KEY}\
+				--ca-pass ${CA_PASS}\
 				--in ${FILE_NODES_CONF} \
 				--out "${PWD}/${OUTPUT_CERT}" \
-				--ca ${CA_DEST} \
-				--ca-pass ${CA_KEY} \
 				--pass ${NODE_KEY} \
 				--silent
 			echo "The certificates are succesfuly created."
 			echo "The Destination file is ${PWD}/${OUTPUT_CERT}"
 		else
+			#echo "2 $2 -- 3  $3  -- 4 $4  --5  $5  key [${CA_KEY}]  cert[${CA_CERT}]"
 			echo "Error: no elasticsearch-certutil found make sur that you're yousing the right setup script."
 			echo "This script is used for the deb instalation."
 		fi
@@ -118,7 +121,7 @@ CERT_PART()
 CERT_USAGE()
 {
 	echo -e "\t\tCertificate Nodes Usage :"
-	echo -e "\t\t\t cert [option] | [[URL_CA conf_file] [file_conf_Nodes.yml]]"
+	echo -e "\t\t\t cert [option] | [[URL_CA-KEY URL_CA_CERT conf_file] [file_conf_Nodes.yml]]"
 	echo -e "\t\t\t\t option :"
 	echo -e "\t\t\t\t\t h         : -\t Explaine how to use the cert commande."
 

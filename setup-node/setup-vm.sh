@@ -8,8 +8,8 @@ JDK_DIR="/usr/java"
 JAVA_PATH=${JDK_DIR}/${JDK_FILE}"/bin"
 
 #################################################################
-(sudo apt-get update && sudo apt-get upgrade && sudo apt-get purge) > /dev/null
-(sudo apt-get install -y sudo openssh-server git curl unzip) > /dev/null
+(sudo apt-get update && sudo apt-get upgrade && sudo apt-get purge) >> /dev/null
+(sudo apt-get install -y sudo openssh-server git curl unzip wget) >> /dev/null
 
 #################################################################
 if [ ! -f ${JDK_TEMP_FILE} ]; then
@@ -65,9 +65,11 @@ echo "set-Up the Node done."
 #	scp /etc/path_to_sert user@192.168.1.x:chemin/de/réception/
 #################################################################
 
-echo "
+sudo echo "
 10.2.1.197	elasticsearch-node-1
 10.2.1.174	elasticsearch-node-2
 10.2.1.90	elasticsearch-node-3
+10.2.1.115	elasticsearch-node-4
+10.2.1.109	elasticsearch-node-5
 " >> /etc/hosts
 

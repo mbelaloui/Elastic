@@ -1,9 +1,11 @@
 #/bin/bash
 
+PEM_CA_NAME="My-ELK-Ca.zip"
+
 DEFAULT_CA_NAME="My-ELK-Ca.p12"
 DEFAULT_CERT_NAME="My-ELK-Cert.zip"
-DEFAULT_CA_VALIDITY_DAYS=30
-RSA_KEY_SIZE=1024
+DEFAULT_CA_VALIDITY_DAYS=60
+RSA_KEY_SIZE=2048
 
 CA_PART ()
 {
@@ -31,25 +33,59 @@ CA_PART ()
 		read -s CA_KEY
 		echo ""
 
-#--------------------------------Name output------------------------------------------------------------------------------------------
-		echo -n "Please, enter the name of the out put Certificat : [default: ${DEFAULT_CA_NAME}]"
-		read OUTPUT_CA
-		if [ -z "$OUTPUT_CA" ]
+#----------------------------------type Ca--------------------------------------------------------------------------------------------
+	#	-----------------Name output-----------------
+		echo -n "Please enter the type of CA cert [pem / pk12 ] : "
+		read TYPE_CA
+		echo ""
+
+		if [ "$TYPE_CA" == "pem" ]
+		then
+			OUTPUT_CA=${PEM_CA_NAME}
+	
+			echo -n "Please, enter the name of the out put Certificat : [default: ${PEM_CA_NAME}]"
+			read OUTPUT_CA
+			if [ -z "$OUTPUT_CA" ]
+			then
+				OUTPUT_CA=${PEM_CA_NAME}
+			else
+				OUTPUT_CA+=".zip"
+			fi
+		elif [ "$TYPE_CA" == "pk12" ]
 		then
 			OUTPUT_CA=${DEFAULT_CA_NAME}
-		else
-			OUTPUT_CA+=".p12"
-		fi
 
+			echo -n "Please, enter the name of the out put Certificat : [default: ${DEFAULT_CA_NAME}]"
+			read OUTPUT_CA
+			if [ -z "$OUTPUT_CA" ]
+			then
+				OUTPUT_CA=${DEFAULT_CA_NAME}
+			else
+				OUTPUT_CA+=".p12"
+			fi
+
+		else
+			echo "Error wrong type of cert, the script will exit !."
+			exit 0
+		fi
+	
+	
 		#echo "$OUTPUT_CA"
 
 #---------------------------------run the conf----------------------------------------------------------------------------------------
 		if [ -f "/usr/share/elasticsearch/bin/elasticsearch-certutil" ]
 		then
 			echo "Generating the Certificat Authority."
-			sudo /usr/share/elasticsearch/bin/elasticsearch-certutil ca --pass ${CA_KEY}\
+			if [ "$TYPE_CA" == "pem" ]
+			then
+				echo "pem ca gen..."
+				sudo /usr/share/elasticsearch/bin/elasticsearch-certutil ca --pass ${CA_KEY}\
+				--pem --silent --out "${PWD}/${OUTPUT_CA}" --days $CA_DAYS --keysize ${RSA_KEY_SIZE}
+			else 		#	if [ "$TYPE_CA" == "pk12" ]then
+				echo "pk12 ca gen..."
+				sudo /usr/share/elasticsearch/bin/elasticsearch-certutil ca --pass ${CA_KEY}\
 				--silent --out "${PWD}/${OUTPUT_CA}" --days $CA_DAYS --keysize ${RSA_KEY_SIZE}
-			# If mode verbose affiche some details <path, day of validity, len rsa key, ...>
+			fi
 			echo "The certificate Authority is succesfuly created."
 			echo "The Destination file is in the curent directory \"${PWD}/${OUTPUT_CA}\""
 		else

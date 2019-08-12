@@ -1,9 +1,14 @@
 #/bin/bash
 
-PEM_CA_NAME="My-ELK-Ca.zip"
+PEM_CERT_NAME="My-ELK-Cert-pem.zip"
+PKI_CERT_NAME="My-ELK-Cert-pki.zip"
 
+PEM_CA_NAME="My-ELK-Ca.zip"
 DEFAULT_CA_NAME="My-ELK-Ca.p12"
-DEFAULT_CERT_NAME="My-ELK-Cert.zip"
+#PKI_CA_NAME="My-ELK-Ca.p12"    a mettre a jour
+
+#DEFAULT_CERT_NAME="My-ELK-Cert.zip"
+
 DEFAULT_CA_VALIDITY_DAYS=60
 RSA_KEY_SIZE=2048
 
@@ -108,15 +113,7 @@ CERT_PART()
 		FILE_NODES_CONF=$(readlink -f $5)
 		CA_KEY=$(readlink -f $3)
 		CA_CERT=$(readlink -f $4)
-#--------------------------------Name output------------------------------------------------------------------------------------------
-		echo -n "Please, enter the name of the out put Certificats zip file : [default: ${DEFAULT_CERT_NAME}]"
-		read OUTPUT_CERT
-		if [ -z "$OUTPUT_CERT" ]
-		then
-			OUTPUT_CERT=${DEFAULT_CERT_NAME}
-		else
-			OUTPUT_CERT+=".zip"
-		fi
+
 #--------------------------------Password Ca------------------------------------------------------------------------------------------
 		echo -n "Please enter the key of the Ca : "
 		read -s CA_PASS
@@ -126,11 +123,62 @@ CERT_PART()
 		read -s NODE_KEY
 		echo ""
 
+#----------------------------------type Cert------------------------------------------------------------------------------------------
+	#  	 -----------------Name output-----------------
+		echo -n "Please enter the type of Cert [ pem / pk12 ] : "
+		read TYPE_CERT
+		echo ""
+		if [ "$TYPE_CERT" == "pem" ]
+		then
+			OUTPUT_CERT=${PEM_CERT_NAME}
+	
+			echo -n "Please, enter the name of the out put Certificat pem : [default: ${PEM_CERT_NAME}]"
+			read OUTPUT_CERT
+			if [ -z "$OUTPUT_CERT" ]
+			then
+				OUTPUT_CERT=${PEM_CERT_NAME}
+			else
+				OUTPUT_CERT+="-pem.zip"
+			fi
+		elif [ "$TYPE_CERT" == "pk12" ]
+		then
+			OUTPUT_CERT=${PKI_CERT_NAME}
+
+			echo -n "Please, enter the name of the out put Certificat pk12 : [default: ${PKI_CERT_NAME}]"
+			read OUTPUT_CERT
+			if [ -z "$OUTPUT_CERT" ]
+			then
+				OUTPUT_CERT=${PKI_CERT_NAME}
+			else
+				OUTPUT_CERT+="-pki.zip"
+			fi
+
+		else
+			echo "Error wrong type of cert, the script will exit !."
+			exit 0
+		fi
+	
+	
+		#echo "$OUTPUT_CA"
+
 
 #--------------------------------Run Script-------------------------------------------------------------------------------------------
 		if [ -f "/usr/share/elasticsearch/bin/elasticsearch-certutil" ]; then
 			echo "Generating the Cluster node certificats."
-			sudo /usr/share/elasticsearch/bin/elasticsearch-certutil cert \
+			if [ "$TYPE_CERT" == "pem" ]
+			then
+				sudo /usr/share/elasticsearch/bin/elasticsearch-certutil cert \
+				--ca-cert ${CA_CERT}\
+				--ca-key ${CA_KEY}\
+				--ca-pass ${CA_PASS}\
+				--in ${FILE_NODES_CONF} \
+				--out "${PWD}/${OUTPUT_CERT}" \
+				--pass ${NODE_KEY} \
+				--silent \
+				--pem
+			elif [ "$TYPE_CERT" == "pk12" ]
+			then
+				sudo /usr/share/elasticsearch/bin/elasticsearch-certutil cert \
 				--ca-cert ${CA_CERT}\
 				--ca-key ${CA_KEY}\
 				--ca-pass ${CA_PASS}\
@@ -138,6 +186,7 @@ CERT_PART()
 				--out "${PWD}/${OUTPUT_CERT}" \
 				--pass ${NODE_KEY} \
 				--silent
+			fi	
 			echo "The certificates are succesfuly created."
 			echo "The Destination file is ${PWD}/${OUTPUT_CERT}"
 		else

@@ -38,16 +38,16 @@ xpack.monitoring.enabled: true
 # xpack.security.enabled: true
 # xpack.security.transport.ssl.enabled: true
 # xpack.security.transport.ssl.verification_mode: certificate 
-# xpack.security.transport.ssl.keystore.path: /etc/elasticsearch/cert/elasticsearch-node-3.p12
-# xpack.security.transport.ssl.truststore.path: /etc/elasticsearch/cert/elasticsearch-node-3.p12
+# xpack.security.transport.ssl.keystore.path: *.p12
+# xpack.security.transport.ssl.truststore.path: *.p12
 
 #bin/elasticsearch-keystore add xpack.security.transport.ssl.keystore.secure_password
 #bin/elasticsearch-keystore add xpack.security.transport.ssl.truststore.secure_password
 #
 # xpack.security.http.ssl.enabled: true
 # xpack.security.http.ssl.client_authentication: optional
-# xpack.security.http.ssl.keystore.path: /etc/elasticsearch/cert/elasticsearch-node-3.p12
-# xpack.security.http.ssl.truststore.path: /etc/elasticsearch/cert/elasticsearch-node-3.p12
+# xpack.security.http.ssl.keystore.path: *.p12
+# xpack.security.http.ssl.truststore.path: *.p12
 #
 #bin/elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password
 #bin/elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password

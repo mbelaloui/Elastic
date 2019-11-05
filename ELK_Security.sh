@@ -12,6 +12,9 @@ DEFAULT_CA_NAME="My-ELK-Ca.p12"
 DEFAULT_CA_VALIDITY_DAYS=60
 RSA_KEY_SIZE=2048
 
+CERTBIN=/usr/share/elasticsearch/bin/elasticsearch-certutil
+CERTBIN=bin/elasticsearch-certutil
+
 CA_PART ()
 {
 	echo "Certificat Authority"
@@ -78,17 +81,17 @@ CA_PART ()
 		#echo "$OUTPUT_CA"
 
 #---------------------------------run the conf----------------------------------------------------------------------------------------
-		if [ -f "/usr/share/elasticsearch/bin/elasticsearch-certutil" ]
+		if [ -f "${CERTBIN}" ]
 		then
 			echo "Generating the Certificat Authority."
 			if [ "$TYPE_CA" == "pem" ]
 			then
 				echo "pem ca gen..."
-				sudo /usr/share/elasticsearch/bin/elasticsearch-certutil ca --pass ${CA_KEY}\
+				sudo ${CERTBIN} ca --pass ${CA_KEY}\
 				--pem --silent --out "${PWD}/${OUTPUT_CA}" --days $CA_DAYS --keysize ${RSA_KEY_SIZE}
 			else 		#	if [ "$TYPE_CA" == "pk12" ]then
 				echo "pk12 ca gen..."
-				sudo /usr/share/elasticsearch/bin/elasticsearch-certutil ca --pass ${CA_KEY}\
+				sudo ${CERTBIN} ca --pass ${CA_KEY}\
 				--silent --out "${PWD}/${OUTPUT_CA}" --days $CA_DAYS --keysize ${RSA_KEY_SIZE}
 			fi
 			echo "The certificate Authority is succesfuly created."
@@ -163,11 +166,11 @@ CERT_PART()
 
 
 #--------------------------------Run Script-------------------------------------------------------------------------------------------
-		if [ -f "/usr/share/elasticsearch/bin/elasticsearch-certutil" ]; then
+		if [ -f "${CERTBIN}" ]; then
 			echo "Generating the Cluster node certificats."
 			if [ "$TYPE_CERT" == "pem" ]
 			then
-				sudo /usr/share/elasticsearch/bin/elasticsearch-certutil cert \
+				sudo ${CERTBIN} cert \
 				--ca-cert ${CA_CERT}\
 				--ca-key ${CA_KEY}\
 				--ca-pass ${CA_PASS}\
@@ -178,7 +181,7 @@ CERT_PART()
 				--pem
 			elif [ "$TYPE_CERT" == "pk12" ]
 			then
-				sudo /usr/share/elasticsearch/bin/elasticsearch-certutil cert \
+				sudo ${CERTBIN} cert \
 				--ca-cert ${CA_CERT}\
 				--ca-key ${CA_KEY}\
 				--ca-pass ${CA_PASS}\

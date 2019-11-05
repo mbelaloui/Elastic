@@ -1,2 +1,24 @@
-server.host: 0.0.0.0
-#elasticsearch.hosts: ["http://10.2.1.156:9200"]
+##---------------------------- kibana -------------------------------
+server.host: "XXX.XXX.XXX.XXX"
+logging.dest: /var/log/kibana/kibana.log
+#------------------------- elasticsearch ---------------------------
+#elasticsearch.hosts: ["https://elasticsearch-node-1:9200", "https://elasticsearch-node-3:9200"]
+elasticsearch.hosts: ["http://XXX.XXX.XXX.XXX"]
+#----------------------------- XPack -------------------------------
+
+#xpack.monitoring.enabled: true
+
+#elasticsearch.username: "kibana"
+
+#------------------------------------------------------------------
+# user ==> kibana  ssl
+# kibana is the owner of the certs
+
+#server.ssl.enabled: true
+#server.ssl.key: /etc/kibana/kibana-web-cert/kibana-node.key
+#server.ssl.certificate: /etc/kibana/kibana-web-cert/kibana-node.crt
+#csp.strict: true
+
+#------------------------------------------------------------------
+#xpack.security.enabled: true
+#elasticsearch.ssl.certificateAuthorities: /etc/kibana/ca/ca.crt

@@ -12,12 +12,14 @@ DEFAULT_CA_NAME="My-ELK-Ca.p12"
 DEFAULT_CA_VALIDITY_DAYS=60
 RSA_KEY_SIZE=2048
 
-CERTBIN=/usr/share/elasticsearch/bin/elasticsearch-certutil
+#CERTBIN=/usr/share/elasticsearch/bin/elasticsearch-certutil
 CERTBIN=bin/elasticsearch-certutil
+US=${USER}
 
 CA_PART ()
 {
 	echo "Certificat Authority"
+	echo ${US}
 	if [ "$1" -eq 1 ]
 	then
 		#echo "Please, entre <transport> "
@@ -94,6 +96,7 @@ CA_PART ()
 				sudo ${CERTBIN} ca --pass ${CA_KEY}\
 				--silent --out "${PWD}/${OUTPUT_CA}" --days $CA_DAYS --keysize ${RSA_KEY_SIZE}
 			fi
+			sudo chown ${US}:${US} ${PWD}/${OUTPUT_CA}
 			echo "The certificate Authority is succesfuly created."
 			echo "The Destination file is in the curent directory \"${PWD}/${OUTPUT_CA}\""
 		else
@@ -117,6 +120,7 @@ CERT_PART()
 		CA_KEY=$(readlink -f $3)
 		CA_CERT=$(readlink -f $4)
 
+		echo ${CERTBIN}
 #--------------------------------Password Ca------------------------------------------------------------------------------------------
 		echo -n "Please enter the key of the Ca : "
 		read -s CA_PASS
@@ -190,6 +194,7 @@ CERT_PART()
 				--pass ${NODE_KEY} \
 				--silent
 			fi	
+			sudo chown ${US}:${US} ${PWD}/${OUTPUT_CERT}
 			echo "The certificates are succesfuly created."
 			echo "The Destination file is ${PWD}/${OUTPUT_CERT}"
 		else
@@ -250,3 +255,4 @@ then
 else
 	USAGE
 fi
+

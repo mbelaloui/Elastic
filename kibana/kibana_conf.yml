@@ -9,6 +9,8 @@ elasticsearch.hosts: ["http://XXX.XXX.XXX.XXX"]
 #xpack.monitoring.enabled: true
 
 #elasticsearch.username: "kibana"
+#
+#/bin/kibana-keystore add elasticsearch.password
 
 #------------------------------------------------------------------
 # user ==> kibana  ssl
@@ -18,6 +20,7 @@ elasticsearch.hosts: ["http://XXX.XXX.XXX.XXX"]
 #server.ssl.key: /etc/kibana/kibana-web-cert/kibana-node.key
 #server.ssl.certificate: /etc/kibana/kibana-web-cert/kibana-node.crt
 #csp.strict: true
+#
 
 #------------------------------------------------------------------
 #xpack.security.enabled: true
